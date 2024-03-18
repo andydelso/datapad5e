@@ -1,3 +1,5 @@
+package com.ddaypunk.datapad5e
+
 import android.os.Build
 
 class AndroidPlatform : Platform {

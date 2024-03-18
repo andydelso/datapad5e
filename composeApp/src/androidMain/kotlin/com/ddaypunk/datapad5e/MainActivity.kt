@@ -1,4 +1,4 @@
-package com.ddaypunk.kotlinproject
+package com.ddaypunk.datapad5e
 
 import App
 import android.os.Bundle
