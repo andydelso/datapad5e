@@ -1,3 +1,5 @@
+package com.ddaypunk.datapad5e
+
 import platform.UIKit.UIDevice
 
 class IOSPlatform: Platform {

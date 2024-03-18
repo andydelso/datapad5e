@@ -1,4 +1,4 @@
-package data.remote
+package com.ddaypunk.datapad5e.powers.data.remote
 
 import io.ktor.client.HttpClient
 
