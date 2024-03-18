@@ -18,8 +18,16 @@ kotlin {
     sourceSets {
         
         androidMain.dependencies {
+            implementation(project.dependencies.platform(libs.compose.bom))
+            implementation(libs.compose.ui.tooling)
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
+            implementation(libs.compose.material3)
+//            implementation(libs.androidx.navigation.compose)
+//            implementation(libs.androidx.lifecycle.compose.viewmodel)
+//            implementation(libs.koin.core)
+//            implementation(libs.koin.android)
+//            implementation(libs.coil.compose)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -29,6 +37,8 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(projects.shared)
+//            @OptIn(ExperimentalComposeLibrary::class)
+//            implementation(compose.components.resources)
         }
     }
 }
