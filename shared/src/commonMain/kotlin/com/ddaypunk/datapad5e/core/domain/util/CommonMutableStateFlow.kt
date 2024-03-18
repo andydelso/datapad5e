@@ -1,4 +1,4 @@
-package com.ddaypunk.translator.core.domain.util
+package com.ddaypunk.datapad5e.core.domain.util
 
 import kotlinx.coroutines.flow.MutableStateFlow
 
