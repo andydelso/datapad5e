@@ -45,7 +45,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.ddaypunk.kotlinproject.shared"
+    namespace = "com.ddaypunk.datapad5e.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11

@@ -44,7 +44,7 @@ kotlin {
 }
 
 android {
-    namespace = "com.ddaypunk.kotlinproject"
+    namespace = "com.ddaypunk.datapad5e"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -52,7 +52,7 @@ android {
     sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 
     defaultConfig {
-        applicationId = "com.ddaypunk.kotlinproject"
+        applicationId = "com.ddaypunk.datapad5e"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
         versionCode = 1
