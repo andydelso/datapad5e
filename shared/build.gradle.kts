@@ -33,6 +33,7 @@ kotlin {
             implementation(libs.ktor.core)
             implementation(libs.ktor.serialization)
             implementation(libs.ktor.serialization.json)
+            implementation(libs.ktor.logging)
         }
         androidMain.dependencies {
             api(libs.koin.android)

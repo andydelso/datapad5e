@@ -1,5 +1,5 @@
 [versions]
-agp = "8.2.0"
+agp = "8.2.2"
 android-compileSdk = "34"
 android-minSdk = "24"
 android-targetSdk = "34"
@@ -11,7 +11,8 @@ androidx-espresso-core = "3.5.1"
 androidx-material = "1.11.0"
 androidx-test-junit = "1.1.5"
 compose = "1.6.2"
-compose-bom = "2024.02.02"
+compose-compiler = "1.5.10"
+compose-bom = "2024.09.02"
 compose-nav = "2.7.6"
 compose-viewmodel = "2.6.1"
 compose-plugin = "1.6.0"
@@ -49,6 +50,7 @@ koin-test = { module = "io.insert-koin:koin-test" }
 ktor-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
 ktor-android = { module = "io.ktor:ktor-client-android", version.ref = "ktor" }
 ktor-darwin = { module = "io.ktor:ktor-client-darwin", version.ref = "ktor" }
+ktor-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktor"}
 ktor-serialization = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
 ktor-serialization-json = { module = "io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor" }
 

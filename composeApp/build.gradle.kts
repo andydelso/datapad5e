@@ -1,5 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
@@ -26,8 +24,7 @@ kotlin {
             implementation(libs.compose.material3)
             implementation(libs.androidx.navigation.compose)
             implementation(libs.androidx.lifecycle.compose.viewmodel)
-            implementation(libs.koin.core)
-            implementation(libs.koin.android)
+            implementation(libs.ktor.android)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -67,6 +64,12 @@ android {
         getByName("release") {
             isMinifyEnabled = false
         }
+    }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
