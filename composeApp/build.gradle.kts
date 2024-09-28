@@ -1,41 +1,60 @@
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsCompose)
+    alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlinSerialization)
 }
 
 kotlin {
     androidTarget {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "11"
-            }
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
+
+    listOf(
+        iosX64(),
+        iosArm64(),
+        iosSimulatorArm64()
+    ).forEach { iosTarget ->
+        iosTarget.binaries.framework {
+            baseName = "ComposeApp"
+            isStatic = false
+        }
+    }
+
     sourceSets {
-        
+
         androidMain.dependencies {
-            implementation(project.dependencies.platform(libs.compose.bom))
-            implementation(libs.compose.ui.tooling)
-            implementation(libs.compose.ui.tooling.preview)
+            api(libs.koin.android)
+            implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
-            implementation(libs.compose.material3)
-            implementation(libs.androidx.navigation.compose)
-            implementation(libs.androidx.lifecycle.compose.viewmodel)
             implementation(libs.ktor.android)
         }
+        iosMain.dependencies {
+            implementation(libs.ktor.darwin)
+        }
         commonMain.dependencies {
+            api(project.dependencies.platform(libs.koin.bom))
+            api(libs.koin.core)
+            api(libs.koin.test)
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
-            implementation(projects.shared)
-//            @OptIn(ExperimentalComposeLibrary::class)
-//            implementation(compose.components.resources)
+            implementation(libs.androidx.lifecycle.compose.viewmodel)
+            implementation(libs.ktor.core)
+            implementation(libs.ktor.serialization)
+            implementation(libs.ktor.serialization.json)
+            implementation(libs.ktor.logging)
         }
     }
 }
@@ -65,18 +84,20 @@ android {
             isMinifyEnabled = false
         }
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.compose.compiler.get()
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        compose = true
+    }
     dependencies {
-        debugImplementation(libs.compose.ui.tooling)
+        debugImplementation(compose.uiTooling)
     }
 }
 
+// found this in Google sample project stating:
+// because the dependency on the compose library is a project dependency
+compose.resources {
+    generateResClass = always
+}
