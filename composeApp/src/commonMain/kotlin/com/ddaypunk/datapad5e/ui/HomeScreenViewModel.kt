@@ -7,10 +7,13 @@ import com.ddaypunk.datapad5e.data.HttpClientFactory
 import com.ddaypunk.datapad5e.data.KtorRemotePowersClient
 import com.ddaypunk.datapad5e.data.PowerModel
 import com.ddaypunk.datapad5e.domain.Resource
+import datapad5e.composeapp.generated.resources.Res
+import datapad5e.composeapp.generated.resources.acid_splash
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 
 class HomeScreenViewModel (
 //    private val powersClient: KtorRemotePowersClient,
@@ -24,7 +27,7 @@ class HomeScreenViewModel (
     private val repository = PowersRepository(powersClient)
 
 
-    private val _state: MutableStateFlow<HomeScreenUiState> = MutableStateFlow<HomeScreenUiState>(
+    private val _state: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(
         HomeScreenUiState.Loading
     )
     val state = _state.asStateFlow()
@@ -65,12 +68,11 @@ class HomeScreenViewModel (
         }
     }
 
-    private fun getPowerImageFrom(name: String): Int? {
-//        Res.drawable.acid_splash
-//        return when(name.lowercase()) {
-//            "acid splash" -> Res
-//                else _
-//        }
+    private fun getPowerImageFrom(name: String): DrawableResource? {
+        return when(name.lowercase()) {
+            "acid splash" -> Res.drawable.acid_splash
+            else -> null
+        }
         return null
     }
 

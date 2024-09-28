@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import datapad5e.composeapp.generated.resources.Res
 import datapad5e.composeapp.generated.resources.acid_splash
@@ -32,9 +35,16 @@ fun PowerCard(
                 }
         ) {
             Box(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxSize()
             ) {
-                Image(painter = painterResource(Res.drawable.acid_splash), contentDescription = null)
+                image?.let { nonNullImage ->
+                    Image(
+                        painter = painterResource(nonNullImage),
+                        contentDescription = "$title background",
+                        contentScale = ContentScale.FillBounds,
+                        alpha = 0.8f
+                    )
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -43,15 +53,17 @@ fun PowerCard(
                             horizontal = 16.dp
                         )
                 ) {
+                    val textColor = if (image != null) Color.White else Color.Black
                     Text(
                         text = title,
-                        style = MaterialTheme.typography.titleMedium,
-                        color = Color.LightGray
+                        style = MaterialTheme.typography.titleLarge,
+                        color = textColor,
+                        fontWeight = FontWeight.Bold
                     )
                     Text(
                         text = subtitle,
                         style = MaterialTheme.typography.bodySmall,
-                        color = Color.LightGray
+                        color = textColor
                     )
                 }
             }
