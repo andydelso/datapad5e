@@ -61,19 +61,11 @@ class HomeScreenViewModel (
                     title = model.name,
                     subtitle = model.powerType.displayText,
                     level = model.level,
-                    image = getPowerImageFrom(model.name),
+                    image = model.name.toPowerImage(),
                     onClick = { onInput(HomeScreenUserInput.PowerTapped(model)) }
                 )
             }
         }
-    }
-
-    private fun getPowerImageFrom(name: String): DrawableResource? {
-        return when(name.lowercase()) {
-            "acid splash" -> Res.drawable.acid_splash
-            else -> null
-        }
-        return null
     }
 
     private fun handlePowerTapped(power: PowerModel) {

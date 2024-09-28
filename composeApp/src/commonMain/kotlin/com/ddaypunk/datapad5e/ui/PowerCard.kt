@@ -17,9 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import datapad5e.composeapp.generated.resources.Res
-import datapad5e.composeapp.generated.resources.acid_splash
-import datapad5e.composeapp.generated.resources.compose_multiplatform
 import org.jetbrains.compose.resources.painterResource
 
 @Composable
@@ -42,7 +39,6 @@ fun PowerCard(
                         painter = painterResource(nonNullImage),
                         contentDescription = "$title background",
                         contentScale = ContentScale.FillBounds,
-                        alpha = 0.8f
                     )
                 }
                 Column(
