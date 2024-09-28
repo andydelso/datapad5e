@@ -1,4 +1,4 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
+
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -36,6 +36,9 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.ktor.android)
+            implementation(libs.koin.android)
+            implementation(libs.koin.core)
+            implementation(libs.koin.test)
         }
         iosMain.dependencies {
             implementation(libs.ktor.darwin)

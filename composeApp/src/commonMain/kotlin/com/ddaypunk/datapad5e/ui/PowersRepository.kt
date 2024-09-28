@@ -9,10 +9,12 @@ import com.ddaypunk.datapad5e.data.PowerModel
 import com.ddaypunk.datapad5e.data.PowerType
 import com.ddaypunk.datapad5e.data.PowersResponseDto
 import com.ddaypunk.datapad5e.domain.Resource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class PowersRepository(
-    private val remoteClient: KtorRemotePowersClient
-) {
+class PowersRepository: KoinComponent {
+    private val remoteClient: KtorRemotePowersClient by inject()
+
     suspend fun retrieve(): Resource<Map<Int, List<PowerModel>>> {
         val powers = try {
             val response = remoteClient.getFrom(url = "https://sw5eapi.azurewebsites.net/api/power")

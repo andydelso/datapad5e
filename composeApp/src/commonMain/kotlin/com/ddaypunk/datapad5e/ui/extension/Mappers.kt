@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.ui.extension
 
 import datapad5e.composeapp.generated.resources.Res
 import datapad5e.composeapp.generated.resources.absorb_energy

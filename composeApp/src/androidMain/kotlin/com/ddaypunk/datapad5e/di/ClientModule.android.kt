@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.data
+package com.ddaypunk.datapad5e.di
 
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
@@ -8,11 +8,11 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.serialization.kotlinx.json.json
+import org.koin.dsl.module
 
-@Suppress("EXPECT_ACTUAL_CLASSIFIERS_ARE_IN_BETA_WARNING")
-actual class HttpClientFactory {
-    actual fun create(): HttpClient {
-        return HttpClient(Android) {
+actual val httpClientModule = module {
+    single<HttpClient> {
+        HttpClient(Android) {
             install(ContentNegotiation) {
                 json()
             }

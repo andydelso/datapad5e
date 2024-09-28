@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.ui.extension
 
 fun Int.getFormattedLevel() = when(this.toString()) {
     "1" -> "1st-level"

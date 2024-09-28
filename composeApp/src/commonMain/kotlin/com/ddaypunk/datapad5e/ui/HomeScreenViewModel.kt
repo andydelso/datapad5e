@@ -3,29 +3,19 @@ package com.ddaypunk.datapad5e.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ddaypunk.datapad5e.data.HttpClientFactory
-import com.ddaypunk.datapad5e.data.KtorRemotePowersClient
 import com.ddaypunk.datapad5e.data.PowerModel
 import com.ddaypunk.datapad5e.domain.Resource
-import datapad5e.composeapp.generated.resources.Res
-import datapad5e.composeapp.generated.resources.acid_splash
+import com.ddaypunk.datapad5e.ui.extension.toPowerImage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.jetbrains.compose.resources.DrawableResource
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class HomeScreenViewModel (
-//    private val powersClient: KtorRemotePowersClient,
-//    private val coroutineScope: CoroutineScope?
-) : ViewModel() {
+class HomeScreenViewModel : ViewModel(), KoinComponent {
+    private val repository: PowersRepository by inject()
     private lateinit var response: Resource<Map<Int, List<PowerModel>>>
-
-//    private val viewModelScope = coroutineScope ?: CoroutineScope(Dispatchers.Main)
-    private val httpClient = HttpClientFactory().create()
-    private val powersClient = KtorRemotePowersClient(httpClient)
-    private val repository = PowersRepository(powersClient)
-
 
     private val _state: MutableStateFlow<HomeScreenUiState> = MutableStateFlow(
         HomeScreenUiState.Loading
