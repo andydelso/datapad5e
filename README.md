@@ -2,6 +2,8 @@
 Multiplatform mobile application for quick referencing and managing Force/Tech powers for your [SW5e](https://sw5e.com) games.
 This is a Kotlin Multiplatform project targeting Android, iOS. iOS is not yet functioning due to Kotlin 2.0 updates.
 
+![Screenshot_20240928_152828](https://github.com/user-attachments/assets/54e112c0-86c8-4ee1-a0d0-7a2bbe29d80e)
+
 ## technology
 - [Kotlin and Compose Multiplatform](https://www.jetbrains.com/kotlin-multiplatform/)
 - [Ktor](https://ktor.io/)
@@ -15,6 +17,7 @@ The project uses official SW5e data with some help from generative AI for power 
   - Users can view all the powers available currently
   - Users can view specifics about each power upon tap
 - **In progress**
+
   - Appropriate images for all powers
   - Dependency Injection considerations
 - **Future features**
