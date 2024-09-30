@@ -2,7 +2,6 @@ package com.ddaypunk.datapad5e.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,7 +13,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.carousel.HorizontalMultiBrowseCarousel
+import androidx.compose.material3.carousel.CarouselDefaults
+import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -47,7 +47,7 @@ fun HomeScreenReady(
 ) {
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
-        contentPadding = PaddingValues(16.dp),
+//        contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         state.powers?.let { nonNullPowers ->
@@ -66,10 +66,12 @@ fun HomeScreenReady(
                         style = MaterialTheme.typography.titleLarge
                     )
                     Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalMultiBrowseCarousel(
+                    HorizontalUncontainedCarousel(
                         state = carouselState,
-                        preferredItemWidth = 160.dp,
-                        itemSpacing = 8.dp
+                        itemWidth = 228.dp,
+                        itemSpacing = 8.dp,
+                        flingBehavior = CarouselDefaults.singleAdvanceFlingBehavior(carouselState),
+                        modifier = Modifier.padding(start = 16.dp)
                     ) { page ->
                         powers?.get(page)?.let { nonNullPage ->
                             // Todo this should be in the screen state
