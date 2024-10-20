@@ -1,6 +1,6 @@
 package com.ddaypunk.datapad5e.di
 
-import com.ddaypunk.datapad5e.ui.PowersRepository
+import com.ddaypunk.datapad5e.data.PowersRepository
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin

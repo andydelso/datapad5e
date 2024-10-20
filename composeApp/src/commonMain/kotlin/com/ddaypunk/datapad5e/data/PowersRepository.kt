@@ -1,13 +1,5 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.data
 
-import com.ddaypunk.datapad5e.data.CastingPeriod
-import com.ddaypunk.datapad5e.data.ContentSource
-import com.ddaypunk.datapad5e.data.ContentType
-import com.ddaypunk.datapad5e.data.ForceAlignment
-import com.ddaypunk.datapad5e.data.KtorRemotePowersClient
-import com.ddaypunk.datapad5e.data.PowerModel
-import com.ddaypunk.datapad5e.data.PowerType
-import com.ddaypunk.datapad5e.data.PowersResponseDto
 import com.ddaypunk.datapad5e.domain.Resource
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -59,7 +51,3 @@ private fun List<PowersResponseDto>.toModelList(): List<PowerModel> {
         )
     }
 }
-
-data class PowersModel(
-    val powers: Map<Int, List<PowerModel>>
-)

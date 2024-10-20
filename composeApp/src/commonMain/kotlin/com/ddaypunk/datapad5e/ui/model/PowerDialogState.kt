@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.ui.model
 
 data class PowerDialogState(
     val title: String,

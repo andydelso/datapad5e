@@ -4,8 +4,10 @@ package com.ddaypunk.datapad5e.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddaypunk.datapad5e.data.PowerModel
+import com.ddaypunk.datapad5e.data.PowersRepository
 import com.ddaypunk.datapad5e.domain.Resource
 import com.ddaypunk.datapad5e.ui.extension.toPowerImage
+import com.ddaypunk.datapad5e.ui.model.PowerCardState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

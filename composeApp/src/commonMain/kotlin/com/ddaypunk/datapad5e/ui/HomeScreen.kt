@@ -5,14 +5,16 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.carousel.CarouselDefaults
 import androidx.compose.material3.carousel.HorizontalUncontainedCarousel
 import androidx.compose.material3.carousel.rememberCarouselState
@@ -24,18 +26,46 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ddaypunk.datapad5e.ui.component.PowerCard
 import com.ddaypunk.datapad5e.ui.extension.getFormattedLevel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
     viewModel: HomeScreenViewModel = viewModel()
 ) {
     val state = viewModel.state.collectAsState()
-
-    when(state.value) {
-        is HomeScreenUiState.Error -> Error(state.value as HomeScreenUiState.Error)
-        HomeScreenUiState.Loading -> Loading()
-        is HomeScreenUiState.Ready -> HomeScreenReady(state.value as HomeScreenUiState.Ready)
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(text = "Datapad 5e")
+                }
+            )
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = innerPadding,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            when (state.value) {
+                is HomeScreenUiState.Error -> {
+                    item {
+                        Error(state.value as HomeScreenUiState.Error)
+                    }
+                }
+                HomeScreenUiState.Loading -> {
+                    item {
+                        Loading()
+                    }
+                }
+                is HomeScreenUiState.Ready ->
+                    item {
+                        HomeScreenReady(state.value as HomeScreenUiState.Ready)
+                    }
+            }
+        }
     }
 }
 
@@ -43,43 +73,33 @@ fun HomeScreen(
 @Composable
 fun HomeScreenReady(
     state: HomeScreenUiState.Ready,
-//    onInput: () -> Unit
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-//        contentPadding = PaddingValues(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
-    ) {
-        state.powers?.let { nonNullPowers ->
-            nonNullPowers.keys.forEach { level ->
-                item(
-                    key = level
-                ) {
-                    val powers = nonNullPowers[level]
-                    val carouselState = rememberCarouselState(
-                        initialItem = 0,
-                        itemCount = { powers?.size ?: 0 }
-                    )
+    state.powers?.let { nonNullPowers ->
+        nonNullPowers.keys.forEach { level ->
+            val powers = nonNullPowers[level]
+            val carouselState = rememberCarouselState(
+                initialItem = 0,
+                itemCount = { powers?.size ?: 0 }
+            )
 
-                    Text(
-                        text = level.getFormattedLevel(),
-                        style = MaterialTheme.typography.titleLarge
+            Text(
+                text = level.getFormattedLevel(),
+                style = MaterialTheme.typography.titleLarge,
+                modifier = Modifier.padding(start = 16.dp)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            HorizontalUncontainedCarousel(
+                state = carouselState,
+                itemWidth = 228.dp,
+                itemSpacing = 8.dp,
+                flingBehavior = CarouselDefaults.singleAdvanceFlingBehavior(carouselState),
+                modifier = Modifier.padding(start = 16.dp)
+            ) { page ->
+                powers?.get(page)?.let { nonNullPage ->
+                    // Todo this should be in the screen state
+                    PowerCard(
+                        state = nonNullPage
                     )
-                    Spacer(modifier = Modifier.height(16.dp))
-                    HorizontalUncontainedCarousel(
-                        state = carouselState,
-                        itemWidth = 228.dp,
-                        itemSpacing = 8.dp,
-                        flingBehavior = CarouselDefaults.singleAdvanceFlingBehavior(carouselState),
-                        modifier = Modifier.padding(start = 16.dp)
-                    ) { page ->
-                        powers?.get(page)?.let { nonNullPage ->
-                            // Todo this should be in the screen state
-                            PowerCard(
-                                state = nonNullPage
-                            )
-                        }
-                    }
                 }
             }
         }
@@ -89,9 +109,7 @@ fun HomeScreenReady(
             Dialog(
                 onDismissRequest = nonNullCloseCallback,
             ) {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
+                Card {
                     state.dialogContent?.let { nonNullDialogContent ->
                         Column(
                             modifier = Modifier
@@ -189,8 +207,10 @@ fun Loading() {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        CircularProgressIndicator()
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Loading...",
+            text = "Powers Loading...",
             style = MaterialTheme.typography.bodyMedium
         )
     }
