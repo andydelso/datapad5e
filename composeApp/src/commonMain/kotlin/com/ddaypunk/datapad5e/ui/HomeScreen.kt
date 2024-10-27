@@ -2,13 +2,11 @@ package com.ddaypunk.datapad5e.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -22,12 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ddaypunk.datapad5e.ui.component.PowerCard
+import com.ddaypunk.datapad5e.ui.component.PowerDialog
 import com.ddaypunk.datapad5e.ui.extension.getFormattedLevel
+import com.ddaypunk.datapad5e.ui.model.PowerDialogState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,78 +105,26 @@ fun HomeScreenReady(
     }
     if (state.isDialogDisplayed) {
         state.onDialogClose?.let { nonNullCloseCallback ->
-            Dialog(
-                onDismissRequest = nonNullCloseCallback,
-            ) {
-                Card {
-                    state.dialogContent?.let { nonNullDialogContent ->
-                        Column(
-                            modifier = Modifier
-                                .padding(16.dp),
-//                                verticalArrangement = Arrangement.spacedBy(8.dp)
-                        ) {
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(bottom = 16.dp)
-                            ) {
-                                Text(
-                                    text = nonNullDialogContent.name,
-                                    style = MaterialTheme.typography.titleMedium,
-                                    modifier = Modifier.padding(end = 8.dp)
-                                )
-                                Text(
-                                    text = nonNullDialogContent.powerType.displayText,
-                                    style = MaterialTheme.typography.bodyMedium
-                                )
-                            }
-
-                            Row {
-                                Text(
-                                    text = "Casting Period:",
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(text = nonNullDialogContent.castingPeriodText)
-                            }
-
-                            Row {
-                                Text(
-                                    text = "Range:",
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(text = nonNullDialogContent.range)
-                            }
-
-                            Row {
-                                Text(
-                                    text = "Duration:",
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(text = nonNullDialogContent.duration)
-                            }
-
-                            Row(
-                                modifier = Modifier.padding(bottom = 8.dp)
-                            ) {
-                                Text(
-                                    text = "Concentration:",
-                                    modifier = Modifier.padding(end = 8.dp),
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Text(
-                                    text = if (nonNullDialogContent.concentration) {
-                                        "Yes"
-                                    } else {
-                                        "-"
-                                    }
-                                )
-                            }
-
-                            // Todo: clicks are wrong on this
-                            Text(text = nonNullDialogContent.description)
-                        }
+            state.dialogContent?.let { nonNullDialogContent ->
+                Dialog(
+                    onDismissRequest = nonNullCloseCallback,
+                    ) {
+                    with(nonNullDialogContent) {
+                        PowerDialog(
+                            // TODO map this in the VM
+                            state = PowerDialogState(
+                                title = name,
+                                subtitle = powerType.displayText,
+                                alignment = forceAlignment.name,
+                                castingPeriod = castingPeriodText,
+                                range = range,
+                                duration = duration,
+                                concentration = if (concentration) "Yes" else "-",
+                                prerequisite = prerequisite,
+                                description = description,
+                                source = contentSource.name
+                            )
+                        )
                     }
                 }
             }
@@ -215,14 +162,3 @@ fun Loading() {
         )
     }
 }
-
-//@Preview
-//@Composable
-//fun HomeScreenPreview() {
-//     {
-//        HomeScreenReady(
-//            state = (),
-//            onInput = {}
-//        )
-//    }
-//}
