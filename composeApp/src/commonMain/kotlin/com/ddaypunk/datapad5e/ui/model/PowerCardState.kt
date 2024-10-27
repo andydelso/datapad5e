@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.ui.model
 
 import org.jetbrains.compose.resources.DrawableResource
 

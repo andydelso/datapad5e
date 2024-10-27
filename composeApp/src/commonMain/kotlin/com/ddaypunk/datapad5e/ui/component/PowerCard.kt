@@ -1,4 +1,4 @@
-package com.ddaypunk.datapad5e.ui
+package com.ddaypunk.datapad5e.ui.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,7 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ddaypunk.datapad5e.ui.model.PowerCardState
+import datapad5e.composeapp.generated.resources.Res
+import datapad5e.composeapp.generated.resources.absorb_energy
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun PowerCard(
@@ -62,5 +66,21 @@ fun PowerCard(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PowerCardPreview() {
+    Column(Modifier.padding(16.dp)) {
+        PowerCard(
+            state = PowerCardState(
+                title = "Absorb Energy",
+                subtitle = "Tech Power",
+                level = 1,
+                image = Res.drawable.absorb_energy,
+                onClick = {}
+            )
+        )
     }
 }
